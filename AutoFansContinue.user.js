@@ -4,8 +4,6 @@
 // @version      0.112
 // @description  斗鱼荧光棒每日保底赠送。每个直播间每天送一个荧光棒
 // @supportURL   https://github.com/ccccHz/autoFansContinue/issues
-// @updateURL    https://github.com/ccccHz/autoFansContinue/raw/main/AutoFansContinue.user.js
-// @downloadURL  https://github.com/ccccHz/autoFansContinue/raw/main/AutoFansContinue.user.js
 // @author       czh
 // @match        https://*.douyu.com/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
