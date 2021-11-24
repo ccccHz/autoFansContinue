@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         斗鱼每日自动保底续荧光棒
 // @namespace    https://github.com/ccccHz/autoFansContinue
-// @version      0.12
+// @version      0.11
 // @description  斗鱼荧光棒每日保底赠送。每个直播间每天送一个荧光棒
 // @supportURL   https://github.com/ccccHz/autoFansContinue/issues
 // @author       czh
@@ -102,7 +102,7 @@
   function sendAllToOne(rid) {
     getBagGifts()
       .then((data) => {
-        let giftsList = data.data;
+        let giftsList = data.data.list;
         giftsList.forEach((gitf) => {
           //找到荧光棒礼物
           if ((gitf.id = 268)) {
@@ -137,7 +137,7 @@
 
   function main(ifdebug) {
     const CHECKED_DATE = "checkedDate";
-    console.log(测试环境);
+    console.log("测试环境");
     console.log("chz_sript", "start!");
     var today = new Date();
     // 默认 2006-1-1
@@ -161,5 +161,5 @@
     }
   }
 
-  main((ifdebug = true));
+  main(true);
 })();
