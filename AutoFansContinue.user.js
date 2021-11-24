@@ -19,7 +19,9 @@
 
   // 策略
   // 每个直播间送1个保底
+  // 12306 送全部剩余
   var sendNum = 1;
+  var allRid = 12306;
   // 12306 送剩余全部荧光棒
 
   function sleep(time) {
@@ -61,7 +63,6 @@
               });
           });
         }
-        GM_setValue(CHECKED_DATE, new Date());
       })
       .catch((err) => {
         console.log("chz_sript", "请求失败!", err);
@@ -91,7 +92,39 @@
     });
   }
 
-  const CHECKED_DATE = "checkedDate";
+  // 获取背包礼物信息
+  function getBagGifts() {
+    return fetch(
+      "https://www.douyu.com/japi/prop/backpack/web/v1?rid=9373171"
+    ).then((res) => res.json());
+  }
+  // 剩余荧光棒全送给某个直播间
+  function sendAllToOne(rid) {
+    getBagGifts()
+      .then((data) => {
+        let giftsList = data.data;
+        giftsList.forEach((gitf) => {
+          //找到荧光棒礼物
+          if ((gitf.id = 268)) {
+            sendGift_bag(gitf.id, gitf.count, rid)
+              .then((data) => {
+                if (data.msg == "success") {
+                  console.log("chz_sript", rid + "赠送剩余全部荧光棒成功");
+                } else {
+                  console.log("chz_sript", rid + "赠送剩余全部失败");
+                  console.log("chz_sript", rid, data);
+                }
+              })
+              .catch((err) => {
+                console.log("chz_sript", rid, err);
+              });
+          }
+        });
+      })
+      .catch((err) => {
+        console.log("chz_sript", "查询背包礼物失败", err);
+      });
+  }
 
   // date 年月日相同
   function checkDateEquals(a, b) {
@@ -102,20 +135,31 @@
     );
   }
 
-  console.log("chz_sript", "start!");
-  var today = new Date();
-  // 默认 2006-1-1
-  var lastCheckedDay = new Date(
-    GM_getValue(CHECKED_DATE, new Date("2000-1-1"))
-  );
-  // 上次执行方法日期不是今天，则执行
-  if (!checkDateEquals(lastCheckedDay, today)) {
-    FansContinue();
-  } else {
-    console.log("chz_sript", "今天已经执行过");
+  function main(ifdebug) {
+    const CHECKED_DATE = "checkedDate";
+    console.log(测试环境);
+    console.log("chz_sript", "start!");
+    var today = new Date();
+    // 默认 2006-1-1
+    var lastCheckedDay = new Date(
+      GM_getValue(CHECKED_DATE, new Date("2000-1-1"))
+    );
+    // 上次执行方法日期不是今天，则执行
+    if (!checkDateEquals(lastCheckedDay, today)) {
+      FansContinue();
+      sendAllToOne(allRid);
+      // 执行完毕，修改最后一次执行脚本的时间
+      GM_setValue(CHECKED_DATE, new Date());
+    } else {
+      console.log("chz_sript", "今天已经执行过");
+    }
+    // 测试使用
+    if (ifdebug == true) {
+      unsafeWindow.GM_setValue = GM_setValue;
+      unsafeWindow.GM_getValue = GM_getValue;
+      unsafeWindow.GM_notification = GM_notification;
+    }
   }
-  // 测试使用
-  unsafeWindow.GM_setValue = GM_setValue;
-  unsafeWindow.GM_getValue = GM_getValue;
-  unsafeWindow.GM_notification = GM_notification;
+
+  main((ifdebug = true));
 })();
