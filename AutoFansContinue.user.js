@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         斗鱼每日自动保底续荧光棒
 // @namespace    https://github.com/ccccHz/autoFansContinue
-// @version      0.121
+// @version      0.122
 // @description  斗鱼荧光棒每日保底赠送。每个直播间每天送一个荧光棒
 // @supportURL   https://github.com/ccccHz/autoFansContinue/issues
 // @author       czh
