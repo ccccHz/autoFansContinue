@@ -48,7 +48,7 @@
           await sleep(250).then(() => {
             sendGift_bag(268, Number(sendNum), rid)
               .then((data) => {
-                if (data.msg == "success") {
+                if (data.msg === "success") {
                   // showMessage("【续牌】" + rid + "赠送荧光棒成功", "success");
                   console.log("chz_sript", rid + "赠送一根荧光棒成功");
                 } else {
@@ -62,6 +62,8 @@
                 console.log("chz_sript", rid, err);
               });
           });
+
+          sendAllToOne(allRid);
         }
       })
       .catch((err) => {
@@ -118,8 +120,10 @@
               .catch((err) => {
                 console.log("chz_sript", rid, err);
               });
+            break;
           }
         });
+        console.log("chz_sript", "背包内没有荧光棒，执行赠送全部剩余失败")
       })
       .catch((err) => {
         console.log("chz_sript", "查询背包礼物失败", err);
@@ -147,19 +151,17 @@
     // 上次执行方法日期不是今天，则执行
     if (!checkDateEquals(lastCheckedDay, today)) {
       FansContinue();
-      sendAllToOne(allRid);
       // 执行完毕，修改最后一次执行脚本的时间
       GM_setValue(CHECKED_DATE, new Date());
     } else {
       console.log("chz_sript", "今天已经执行过");
     }
     // 测试使用
-    if (ifdebug == true) {
+    if (ifdebug === true) {
       unsafeWindow.GM_setValue = GM_setValue;
       unsafeWindow.GM_getValue = GM_getValue;
       unsafeWindow.GM_notification = GM_notification;
     }
   }
-
   main(true);
 })();
