@@ -105,24 +105,21 @@
     getBagGifts()
       .then((data) => {
         let giftsList = data.data.list;
-        giftsList.forEach((gitf) => {
-          //找到荧光棒礼物
-          if ((gitf.id = 268)) {
-            sendGift_bag(gitf.id, gitf.count, rid)
-              .then((data) => {
-                if (data.msg == "success") {
-                  console.log("chz_sript", rid + "赠送剩余全部荧光棒成功");
-                } else {
-                  console.log("chz_sript", rid + "赠送剩余全部失败");
-                  console.log("chz_sript", rid, data);
-                }
-              })
-              .catch((err) => {
-                console.log("chz_sript", rid, err);
-              });
-            break;
-          }
-        });
+        for(let k=0;k<giftsList.length;k++){
+          if ((giftsList[k].id = 268)) {
+            sendGift_bag(giftsList[k].id, giftsList[k].count, rid)
+                .then((data) => {
+                  if (data.msg === "success") {
+                    console.log("chz_sript", rid + "赠送剩余全部荧光棒成功");
+                  } else {
+                    console.log("chz_sript", rid + "赠送剩余全部失败");
+                    console.log("chz_sript", rid, data);
+                  }
+                })
+                .catch((err) => {
+                  console.log("chz_sript", rid, err);
+                });
+          }}
         console.log("chz_sript", "背包内没有荧光棒，执行赠送全部剩余失败")
       })
       .catch((err) => {
