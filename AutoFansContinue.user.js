@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         斗鱼每日自动保底续荧光棒
 // @namespace    https://github.com/ccccHz/autoFansContinue
-// @version      0.123
+// @version      0.124
 // @description  斗鱼荧光棒每日保底赠送。每个直播间每天送一个荧光棒
 // @supportURL   https://github.com/ccccHz/autoFansContinue/issues
 // @author       czh
@@ -141,16 +141,20 @@
         const CHECKED_DATE = "checkedDate";
         console.log("测试环境");
         console.log("chz_sript", "start!");
-        var today = new Date();
+        let today = new Date();
         // 默认 2006-1-1
-        var lastCheckedDay = new Date(
+        let lastCheckedDay = new Date(
             GM_getValue(CHECKED_DATE, new Date("2000-1-1"))
         );
+        if(isNaN(lastCheckedDay)){
+            GM_setValue(CHECKED_DATE,new Date("2000-1-1"))
+            lastCheckedDay=new Date("2000-1-1")
+        }
         // 上次执行方法日期不是今天，则执行
         if (!checkDateEquals(lastCheckedDay, today)) {
             FansContinue();
             // 执行完毕，修改最后一次执行脚本的时间
-            GM_setValue(CHECKED_DATE, new Date());
+            GM_setValue(CHECKED_DATE, new Date().toString());
         } else {
             console.log("chz_sript", "今天已经执行过");
         }
